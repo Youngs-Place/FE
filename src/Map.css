@@ -1,0 +1,166 @@
+@font-face {
+    font-family: 'PretendardMedium';
+    src: url('/fonts/Pretendard-Medium.woff2') format('woff2'),
+        url('/fonts/Pretendard-Medium.woff') format('woff'),
+        url('/fonts/Pretendard-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'PretendardMedium', sans-serif;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.map-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.search-box {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 400px;
+    height: 50px;
+    border: 2px solid #1f3eff;
+}
+
+.search-left {
+    display: flex;
+    align-items: center;
+    background: #1f3eff;
+    padding: 10px;
+}
+
+.search-logoicon {
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+
+.search-text {
+    color: white;
+    font-weight: bold;
+}
+
+.search-right {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.search-box input {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    margin-right: 5px;
+    outline: none;
+    width: 100%;
+    font-family: 'PretendardMedium', sans-serif;
+    text-align: center;
+}
+
+.search-box input::placeholder {
+    font-size: 14px;
+    color: #999;
+    text-align: center;
+}
+
+.search-button {
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-button-icon {
+    width: 35px;
+    height: 35px;
+}
+
+.filter-container {
+    position: absolute;
+    top: 20px;
+    left: 440px;
+    z-index: 1000;
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 2px solid #1f3eff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-family: 'PretendardMedium', sans-serif;
+}
+
+.filter-container select {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    outline: none;
+    appearance: none;
+    margin-right: 5px;
+}
+
+.filter-container .dropdown-icon {
+    color: #1f3eff;
+    font-size: 16px;
+}
+
+.dropdown-arrow {
+    width: 30px;
+    height: 30px;
+}
+
+/* 찜 목록 버튼 스타일 */
+.bookmark-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    height: 53.2px;
+    background-color: #1f3eff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'PretendardMedium', sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+}
+
+/* 찜 목록 아이콘 스타일 */
+.bookmark-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+
+}
