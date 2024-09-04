@@ -16,7 +16,6 @@ const CITY_COORDINATES = {
 };
 
 const Map: React.FC = () => {
-  // 상태 관리: 검색어, 선택된 도시/구역, 카카오 지도 로딩 상태, 마커 목록, 토글 상태
   const [searchInput, setSearchInput] = useState<string>('');
   const [selectedCity, setSelectedCity] = useState<string>('서울특별시');
   const [selectedDistrict, setSelectedDistrict] = useState<string>(CITIES['서울특별시'][0]);
@@ -24,8 +23,8 @@ const Map: React.FC = () => {
   const [markers, setMarkers] = useState<any[]>([]);
   const mapRef = useRef<any>(null);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
+  const [isWishlistVisible, setIsWishlistVisible] = useState<boolean>(false); // 찜 목록 표시 여부 상태 추가
 
-  // 전체/진행 중 토글 버튼 클릭 핸들러
   const handleToggleAllClick = () => {
     setIsAllSelected(true);
   };
@@ -34,7 +33,14 @@ const Map: React.FC = () => {
     setIsAllSelected(false);
   };
 
-  // 카카오 맵 API 로드 및 지도 초기화
+  const handleWishlistClick = () => {
+    setIsWishlistVisible(true); // 찜 목록 버튼 클릭 시 찜 목록 표시
+  };
+
+  const handleWishlistClose = () => {
+    setIsWishlistVisible(false); // 찜 목록 닫기
+  };
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_MAP}&libraries=services&autoload=false`;
@@ -59,7 +65,6 @@ const Map: React.FC = () => {
     };
   }, []);
 
-  // 도시 선택 변경 시 지도의 중심 좌표 변경
   useEffect(() => {
     if (isKakaoLoaded) {
       const { kakao } = window as any;
@@ -68,13 +73,11 @@ const Map: React.FC = () => {
     }
   }, [selectedCity]);
 
-  // 지도에 표시된 마커 모두 제거
   const clearMarkers = () => {
     markers.forEach(marker => marker.setMap(null));
     setMarkers([]);
   };
 
-  // 검색 버튼 클릭 시 API 호출 및 지도 업데이트
   const handleSearchClick = async () => {
     if (!isKakaoLoaded) {
       console.log("Kakao Maps API is not loaded yet");
@@ -108,14 +111,12 @@ const Map: React.FC = () => {
     }
   };
 
-  // 도시 선택 변경 시 상태 업데이트
   const handleCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = event.target.value;
     setSelectedCity(selected);
     setSelectedDistrict(CITIES[selected][0]);
   };
 
-  // 구/군 선택 변경 시 상태 업데이트
   const handleDistrictChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDistrict(event.target.value);
   };
@@ -176,11 +177,37 @@ const Map: React.FC = () => {
         </button>
       </div>
 
-      {/* 찜 목록 버튼 */}
-      <button className="bookmark-button">
-        <img src="public/images/bookmark-icon.png" alt="bookmark icon" className="bookmark-icon" />
-        찜 목록
-      </button>
+      {/* 찜 목록 버튼 - 찜 목록이 보일 때는 숨김 */}
+      {!isWishlistVisible && (
+        <button className="bookmark-button" onClick={handleWishlistClick}>
+          <img src="public/images/bookmark-icon.png" alt="bookmark icon" className="bookmark-icon" />
+          찜 목록
+        </button>
+      )}
+
+      {/* 찜 목록 표시 - 찜 목록 버튼이 클릭되면 화면을 꽉 채우게 */}
+      {isWishlistVisible && (
+        <>
+          {/* 찜 목록 닫기 버튼 */}
+          <button className="wishlist-close-button" onClick={handleWishlistClose} aria-label="Close wishlist">
+          <img src="public/images/close-icon.png" alt="Close" className="wishlist-close-icon" />
+          </button>
+
+          <div className="wishlist-container-full">
+            <h1>찜 목록</h1>
+            <ul>
+              {Array(10)
+                .fill('서울특별시 종로구 종로 56길 순위권 시티타워')
+                .map((item, index) => (
+                  <li key={index}>
+                    {item}
+                    <button className="wishlist-remove-button" aria-label="Remove from wishlist"></button>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </>
+      )}
 
       {/* 지도 영역 */}
       <div id="map"></div>

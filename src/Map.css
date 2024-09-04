@@ -28,7 +28,7 @@ body {
 .map-container {
     width: 100%;
     height: 100vh;
-    position: relative; /* 자식 요소들을 기준으로 위치 설정 */
+    position: relative;
     overflow: hidden;
 }
 
@@ -67,7 +67,7 @@ body {
     font-size: 18px;
     color: white;
     font-weight: bold;
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    white-space: nowrap;
 }
 
 /* 검색 박스 오른쪽 영역 스타일 */
@@ -128,7 +128,7 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
-    gap: 8px; /* 필터 요소들 사이의 간격 */
+    gap: 8px;
     font-family: 'PretendardMedium', sans-serif;
 }
 
@@ -154,7 +154,7 @@ body {
 .toggle-button-group {
     position: absolute;
     top: 20px;
-    left: 710px; /* 찜 목록 버튼 왼쪽에 위치 */
+    left: 710px;
     height: 50px;
     z-index: 1000;
     display: flex;
@@ -185,9 +185,9 @@ body {
 /* 찜 목록 버튼 스타일 */
 .bookmark-button {
     font-size: 16px;
-    position: absolute; /* 부모 요소를 기준으로 위치 설정 */
+    position: absolute;
     top: 20px;
-    left: 1780px; /* 부모 요소의 왼쪽에서 1780px 떨어진 위치 */
+    right: 20px;
     z-index: 1000;
     height: 54px;
     background-color: #1f3eff;
@@ -203,9 +203,86 @@ body {
     white-space: nowrap;
 }
 
+/* 찜 목록을 전체 화면에 표시할 때 스타일 */
+.wishlist-container-full {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 400px; 
+    background-color: white; /* 닫기 버튼과 같은 배경색 */
+    border-left: none; /* 경계선 제거 */
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: none; /* 그림자 제거 */
+}
+.wishlist-container-full h1 {
+    margin-top: 0;
+    margin-bottom: 50px;
+    font-family: 'PretendardMedium', sans-serif;
+}
+
+.wishlist-container-full ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+/* 찜 목록 항목 스타일 */
+.wishlist-container-full li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+/* 찜 목록 제거 버튼 스타일 */
+.wishlist-remove-button {
+    background: url('public/images/removebutton-icon.png') no-repeat center center;
+    background-size: contain;
+    border: none;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0;
+}
+
 /* 찜 목록 아이콘 스타일 */
 .bookmark-icon {
     width: 20px;
     height: 20px;
     margin-right: 8px;
 }
+
+/* 찜 목록 닫기 버튼 스타일 */
+.wishlist-close-button {
+    z-index: 2000;
+    position: absolute;
+    height: 100px;
+    top: 40%;
+    left: calc(100% - 470px);
+    background-color: white; /* 리스트와 같은 배경색으로 설정 */
+    border: none; /* 경계선 제거 */
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    padding: 10px;
+    box-shadow: none; /* 그림자 제거 */
+    border-radius: 30% 0 0 30%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: -10px;
+}
+
+.wishlist-close-icon {
+    width: 20px; /* 아이콘의 너비 */
+    height: 20px; /* 아이콘의 높이 */
+}
+
