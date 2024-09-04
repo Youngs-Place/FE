@@ -2,17 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import './map.css';
 
+// 시군구 데이터 및 좌표 설정 (데이터베이스 연결 필요)
 const CITIES = {
   '서울특별시': ['중구', '서대문구', '강남구'],
   '부산광역시': ['중구', '서대문구', '강남구'],
-  '대구광역시': ['중구', '서대문구', '강남구']
-}; //데이터 랑 연결하면 될듯??
+  '대구광역시': ['중구', '서대문구', '강남구'],
+};
 
 const CITY_COORDINATES = {
   '서울특별시': { lat: 37.5665, lng: 126.9780 },
   '부산광역시': { lat: 35.1796, lng: 129.0756 },
-  '대구광역시': { lat: 35.8722, lng: 128.6014 }
-}; //필터 선택하면 해당 좌표로 이동함
+  '대구광역시': { lat: 35.8722, lng: 128.6014 },
+};
 
 const Map: React.FC = () => {
   const [searchInput, setSearchInput] = useState<string>('');
@@ -21,6 +22,24 @@ const Map: React.FC = () => {
   const [isKakaoLoaded, setIsKakaoLoaded] = useState<boolean>(false);
   const [markers, setMarkers] = useState<any[]>([]);
   const mapRef = useRef<any>(null);
+  const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
+  const [isWishlistVisible, setIsWishlistVisible] = useState<boolean>(false); // 찜 목록 표시 여부 상태 추가
+
+  const handleToggleAllClick = () => {
+    setIsAllSelected(true);
+  };
+
+  const handleToggleProgressClick = () => {
+    setIsAllSelected(false);
+  };
+
+  const handleWishlistClick = () => {
+    setIsWishlistVisible(true); // 찜 목록 버튼 클릭 시 찜 목록 표시
+  };
+
+  const handleWishlistClose = () => {
+    setIsWishlistVisible(false); // 찜 목록 닫기
+  };
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -104,6 +123,7 @@ const Map: React.FC = () => {
 
   return (
     <div className="map-container">
+      {/* 검색 박스 */}
       <div className="search-box">
         <div className="search-left">
           <img src="public/images/logo.png" alt="user icon" className="search-logoicon" />
@@ -122,6 +142,7 @@ const Map: React.FC = () => {
         </div>
       </div>
 
+      {/* 필터 컨테이너 */}
       <div className="filter-container">
         <div className="filter-item">
           <select onChange={handleCityChange} value={selectedCity}>
@@ -142,12 +163,53 @@ const Map: React.FC = () => {
         </div>
       </div>
 
-      {/* 찜 목록 버튼에 아이콘 추가 */}
-      <button className="bookmark-button">
-        <img src="public/images/bookmark-icon.png" alt="bookmark icon" className="bookmark-icon" />
-        찜 목록
-      </button>
+      {/* 전체/진행 중 토글 버튼 그룹 */}
+      <div className="toggle-button-group">
+        <button
+          className={`toggle-button ${isAllSelected ? 'active' : ''}`}
+          onClick={handleToggleAllClick}>
+          전체
+        </button>
+        <button
+          className={`toggle-button ${!isAllSelected ? 'active' : ''}`}
+          onClick={handleToggleProgressClick}>
+          진행 중
+        </button>
+      </div>
 
+      {/* 찜 목록 버튼 - 찜 목록이 보일 때는 숨김 */}
+      {!isWishlistVisible && (
+        <button className="bookmark-button" onClick={handleWishlistClick}>
+          <img src="public/images/bookmark-icon.png" alt="bookmark icon" className="bookmark-icon" />
+          찜 목록
+        </button>
+      )}
+
+      {/* 찜 목록 표시 - 찜 목록 버튼이 클릭되면 화면을 꽉 채우게 */}
+      {isWishlistVisible && (
+        <>
+          {/* 찜 목록 닫기 버튼 */}
+          <button className="wishlist-close-button" onClick={handleWishlistClose} aria-label="Close wishlist">
+          <img src="public/images/close-icon.png" alt="Close" className="wishlist-close-icon" />
+          </button>
+
+          <div className="wishlist-container-full">
+            <h1>찜 목록</h1>
+            <ul>
+              {Array(10)
+                .fill('서울특별시 종로구 종로 56길 순위권 시티타워')
+                .map((item, index) => (
+                  <li key={index}>
+                    {item}
+                    <button className="wishlist-remove-button" aria-label="Remove from wishlist"></button>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </>
+      )}
+
+      {/* 지도 영역 */}
       <div id="map"></div>
     </div>
   );
