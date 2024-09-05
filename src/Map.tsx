@@ -1,24 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import './map.css';
-
-const CITIES = {
-  '서울특별시': ['중구', '서대문구', '강남구', '중구', '서대문구', '강남구'],
-  '부산광역시': ['중구', '서대문구', '강남구'],
-  '대구광역시': ['중구', '서대문구', '강남구'],
-  '서울특별시2': ['중구', '서대문구', '강남구'],
-  '부산광역시3': ['중구', '서대문구', '강남구'],
-  '대구광역시1': ['중구', '서대문구', '강남구'],
-  '서울특별시12': ['중구', '서대문구', '강남구'],
-  '부산광역시11': ['중구', '서대문구', '강남구'],
-  '대구광역시11': ['중구', '서대문구', '강남구'],
-};
-
-const CITY_COORDINATES = {
-  '서울특별시': { lat: 37.5665, lng: 126.9780 },
-  '부산광역시': { lat: 35.1796, lng: 129.0756 },
-  '대구광역시': { lat: 35.8722, lng: 128.6014 },
-};
+import { CITIES, CITY_COORDINATES, COUNTY_COORDINATES } from './map/cities';
 
 const Map: React.FC = () => {
   const [searchInput, setSearchInput] = useState<string>('');
@@ -32,6 +15,7 @@ const Map: React.FC = () => {
   const [wishlistItems, setWishlistItems] = useState<string[]>(Array(10).fill('서울특별시 종로구 종로 56길 순위권 시티타워'));
   const [isCityDropdownOpen, setIsCityDropdownOpen] = useState<boolean>(false);
   const [isDistrictDropdownOpen, setIsDistrictDropdownOpen] = useState<boolean>(false);
+
   const handleRefreshPage = () => {
     window.location.reload(); // 페이지 새로고침
   };
@@ -65,13 +49,21 @@ const Map: React.FC = () => {
       const { kakao } = window as any;
       kakao.maps.load(() => {
         const container = document.getElementById("map");
-        const options = {
-          center: new kakao.maps.LatLng(CITY_COORDINATES[selectedCity].lat, CITY_COORDINATES[selectedCity].lng),
-          level: 4,
-        };
-        const map = new kakao.maps.Map(container, options);
-        mapRef.current = map;
-        setIsKakaoLoaded(true);
+
+        // 도시 또는 군에 따른 좌표 설정
+        const coordinates = CITY_COORDINATES[selectedCity] || COUNTY_COORDINATES[selectedCity];
+
+        if (coordinates) {
+          const options = {
+            center: new kakao.maps.LatLng(coordinates.lat, coordinates.lng),
+            level: 4,
+          };
+          const map = new kakao.maps.Map(container, options);
+          mapRef.current = map;
+          setIsKakaoLoaded(true);
+        } else {
+          console.error('Coordinates not found for:', selectedCity);
+        }
       });
     };
 
@@ -83,8 +75,13 @@ const Map: React.FC = () => {
   useEffect(() => {
     if (isKakaoLoaded) {
       const { kakao } = window as any;
-      const locPosition = new kakao.maps.LatLng(CITY_COORDINATES[selectedCity].lat, CITY_COORDINATES[selectedCity].lng);
-      mapRef.current.setCenter(locPosition);
+      const coordinates = CITY_COORDINATES[selectedCity] || COUNTY_COORDINATES[selectedCity];
+      if (coordinates) {
+        const locPosition = new kakao.maps.LatLng(coordinates.lat, coordinates.lng);
+        mapRef.current.setCenter(locPosition);
+      } else {
+        console.error('Coordinates not found for:', selectedCity);
+      }
     }
   }, [selectedCity]);
 
@@ -163,12 +160,23 @@ const Map: React.FC = () => {
   const selectDistrict = (district: string) => {
     setSelectedDistrict(district);
     setIsDistrictDropdownOpen(false);
+
+    // 구 선택 시 COUNTY_COORDINATES로 지도 이동
+    if (isKakaoLoaded) {
+      const { kakao } = window as any;
+      const coordinates = COUNTY_COORDINATES[district];
+      if (coordinates) {
+        const locPosition = new kakao.maps.LatLng(coordinates.lat, coordinates.lng);
+        mapRef.current.setCenter(locPosition);
+      } else {
+        console.error('Coordinates not found for:', district);
+      }
+    }
   };
 
   return (
     <div className="mapContainer">
       <div className="searchBox">
-        {/* searchLeft 클릭 시 페이지 새로고침 */}
         <div className="searchLeft" onClick={handleRefreshPage}>
           <img src="public/images/logo.png" alt="user icon" className="searchLogoIcon" />
           <span className="searchText">청년여기</span>

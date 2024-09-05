@@ -124,7 +124,7 @@ body {
     font-size: 16px;
     top: 20px;
     left: 440px;
-    width: 200px;
+    width: 250px;
     z-index: 1000;
     background-color: white;
     padding: 4px 10px;
@@ -149,7 +149,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 70px;
+    width: 80px;
     padding: 5px;
     font-size: 16px;
     font-family: 'PretendardMedium', sans-serif;
@@ -199,12 +199,16 @@ body {
     border: 2px solid #f1f1f1; /* 스크롤바 경계 */
 }
 
+.dropdownArrow {
+    margin-left: 15px; /* 원하는 만큼의 값을 설정하여 오른쪽으로 이동 */
+}
+
 
 /* 토글 버튼 그룹 */
 .toggleButtonGroup {
     position: absolute;
     top: 20px;
-    left: 680px;
+    left: 730px;
     height: 50px;
     z-index: 1000;
     display: flex;
