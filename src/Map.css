@@ -286,3 +286,121 @@ body {
     height: 20px; /* 아이콘의 높이 */
 }
 
+
+.infoWindow {
+  position: absolute;
+  top: 10px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  z-index: 2000;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 300px;
+  min-height: 150px;
+  border: 2px solid #1f3eff;
+  background: white;
+  padding: 10px;
+  pointer-events: auto;
+}
+
+.shortInfo{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.shortInfoTitle{
+  display: inline;
+}
+
+.complex_name{
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.recruit_status{
+  background-color: yellow;
+}
+
+.shortInfo{
+  display:flex;
+  flex-direction: column;
+}
+
+.shortInfoTitle{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.shortInfoTitle>p{
+  font-size: 20px;
+  margin: 5px;
+}
+.openDetail{
+  padding: 10px;
+  font-size: 15px;
+  background-color: white;
+  border: 2px solid #1f3eff;
+  border-radius: 10px;
+  z-index: 3000;
+  pointer-events: auto;
+}
+
+.address{
+  margin: 5px 0px 8px 0px;
+}
+.shortInfoData{
+  /* background-color: lightgray; */
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  /* border: 1px solid lightgray; */
+}
+.shortInfoData>div{
+  /* background-color: white; */
+}
+.shortInfoData>.name{
+  font-weight: bold;
+}
+
+
+.detailWrap{
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.buttonList{
+  background-color: rgb(227, 214, 255);
+}
+.buttonList>button{
+  margin: 8px;
+  background-color: inherit;
+  border-style: none;
+  cursor: pointer;
+}
+
+.detailedInfo div{
+  border: 1px solid black;
+}
+.infoAddress{
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  margin: 10px 0;
+}
+.infoAddress>div{
+  padding: 5px;
+}
+.infoOthers{
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 2fr;
+  grid-template-rows: repeat(4, auto);
+}
+.infoOthers>div{
+  padding: 5px;
+}

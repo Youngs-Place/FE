@@ -1,11 +1,12 @@
 import React from "react";
 import Map from "./Map";
+import {BrowserRouter as Router} from 'react-router-dom';
 
 const App: React.FC = () => {
   return (
-    <div>
+    <Router>
       <Map />
-    </div>
+    </Router>
   );
 }
 
