@@ -357,7 +357,6 @@ console.log('mapclicked');
   const selectDistrict = (district: string) => {
     setSelectedDistrict(district);
     setIsDistrictDropdownOpen(false);
-
     try{
       // const response = await axios.get('/map/search', { params: { searchword: searchInput } });
       // const data = response.data;
