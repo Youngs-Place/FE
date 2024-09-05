@@ -81,6 +81,7 @@ body {
 
 /* 검색 입력 필드 */
 .searchBox input {
+    font-size: 16px;
     padding: 5px;
     border: none;
     border-radius: 3px;
