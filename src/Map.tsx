@@ -24,6 +24,7 @@ const Map: React.FC = () => {
   const mapRef = useRef<any>(null);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
   const [isWishlistVisible, setIsWishlistVisible] = useState<boolean>(false); // 찜 목록 표시 여부 상태 추가
+  const [wishlistItems, setWishlistItems] = useState<string[]>(Array(10).fill('서울특별시 종로구 종로 56길 순위권 시티타워')); // 찜 목록 상태 추가
 
   const handleToggleAllClick = () => {
     setIsAllSelected(true);
@@ -39,6 +40,10 @@ const Map: React.FC = () => {
 
   const handleWishlistClose = () => {
     setIsWishlistVisible(false); // 찜 목록 닫기
+  };
+
+  const handleRemoveWishlistItem = (index: number) => {
+    setWishlistItems(prevItems => prevItems.filter((_, i) => i !== index)); // 해당 인덱스의 항목 제거
   };
 
   useEffect(() => {
@@ -190,20 +195,18 @@ const Map: React.FC = () => {
         <>
           {/* 찜 목록 닫기 버튼 */}
           <button className="wishlist-close-button" onClick={handleWishlistClose} aria-label="Close wishlist">
-          <img src="public/images/close-icon.png" alt="Close" className="wishlist-close-icon" />
+            <img src="public/images/close-icon.png" alt="Close" className="wishlist-close-icon" />
           </button>
 
           <div className="wishlist-container-full">
             <h1>찜 목록</h1>
             <ul>
-              {Array(10)
-                .fill('서울특별시 종로구 종로 56길 순위권 시티타워')
-                .map((item, index) => (
-                  <li key={index}>
-                    {item}
-                    <button className="wishlist-remove-button" aria-label="Remove from wishlist"></button>
-                  </li>
-                ))}
+              {wishlistItems.map((item, index) => (
+                <li key={index}>
+                  {item}
+                  <button className="wishlist-remove-button" onClick={() => handleRemoveWishlistItem(index)} aria-label="Remove from wishlist"></button>
+                </li>
+              ))}
             </ul>
           </div>
         </>
