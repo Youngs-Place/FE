@@ -1,4 +1,4 @@
-/* Custom Font 설정 */
+/* Pretendard Medium 폰트 설정 */
 @font-face {
     font-family: 'PretendardMedium';
     src: url('/fonts/Pretendard-Medium.woff2') format('woff2'),
@@ -8,7 +8,7 @@
     font-style: normal;
 }
 
-/* 기본 스타일 설정 */
+/* 기본 스타일 */
 html,
 body {
     margin: 0;
@@ -18,22 +18,22 @@ body {
     font-family: 'PretendardMedium', sans-serif;
 }
 
-/* 지도 영역 스타일 */
+/* 지도 영역 */
 #map {
     width: 100%;
     height: 100%;
 }
 
-/* 지도 컨테이너 스타일 */
-.map-container {
+/* 지도 컨테이너 */
+.mapContainer {
     width: 100%;
     height: 100vh;
     position: relative;
     overflow: hidden;
 }
 
-/* 검색 박스 스타일 */
-.search-box {
+/* 검색 박스 */
+.searchBox {
     position: absolute;
     top: 20px;
     left: 20px;
@@ -47,31 +47,31 @@ body {
     border: 2px solid #1f3eff;
 }
 
-/* 검색 박스 왼쪽 영역 스타일 */
-.search-left {
+/* 검색 박스 왼쪽 영역 */
+.searchLeft {
     display: flex;
     align-items: center;
     background: #1f3eff;
     padding: 10px;
 }
 
-/* 검색 박스 로고 아이콘 스타일 */
-.search-logoicon {
+/* 검색 박스 로고 아이콘 */
+.searchLogoIcon {
     width: 50px;
     height: 50px;
     margin-right: 5px;
 }
 
-/* 검색 박스 텍스트 스타일 */
-.search-text {
+/* 검색 박스 텍스트 */
+.searchText {
     font-size: 18px;
     color: white;
     font-weight: bold;
     white-space: nowrap;
 }
 
-/* 검색 박스 오른쪽 영역 스타일 */
-.search-right {
+/* 검색 박스 오른쪽 영역 */
+.searchRight {
     display: flex;
     align-items: center;
     background: white;
@@ -79,8 +79,9 @@ body {
     flex-grow: 1;
 }
 
-/* 검색 입력 필드 스타일 */
-.search-box input {
+/* 검색 입력 필드 */
+.searchBox input {
+    font-size: 16px;
     padding: 5px;
     border: none;
     border-radius: 3px;
@@ -91,15 +92,15 @@ body {
     text-align: left;
 }
 
-/* 검색 입력 필드 placeholder 스타일 */
-.search-box input::placeholder {
+/* 검색 입력 필드 placeholder */
+.searchBox input::placeholder {
     font-size: 16px;
     color: #999;
     text-align: left;
 }
 
-/* 검색 버튼 스타일 */
-.search-button {
+/* 검색 버튼 */
+.searchButton {
     padding: 5px;
     background-color: transparent;
     border: none;
@@ -109,20 +110,22 @@ body {
     justify-content: center;
 }
 
-/* 검색 버튼 아이콘 스타일 */
-.search-button-icon {
+/* 검색 버튼 아이콘 */
+.searchButtonIcon {
     width: 35px;
     height: 35px;
 }
 
-/* 필터 컨테이너 스타일 */
-.filter-container {
+/* 필터 컨테이너 */
+.filterContainer {
     position: absolute;
+    font-size: 16px;
     top: 20px;
     left: 440px;
+    width: 200px;
     z-index: 1000;
     background-color: white;
-    padding: 10px 15px;
+    padding: 4px 10px;
     border-radius: 10px;
     border: 2px solid #1f3eff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -130,31 +133,76 @@ body {
     align-items: center;
     gap: 8px;
     font-family: 'PretendardMedium', sans-serif;
+    white-space: nowrap;
 }
 
-/* 필터 드롭다운 스타일 */
-.filter-container select {
-    border: none;
-    background: transparent;
-    font-size: 16px;
-    cursor: pointer;
+/* 커스텀 드롭다운 */
+.customDropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* 드롭다운 버튼 */
+.dropdownButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70px;
     padding: 5px;
-    outline: none;
-    appearance: none;
-    margin-right: 5px;
+    font-size: 16px;
+    font-family: 'PretendardMedium', sans-serif;
+    background-color: white;
+    cursor: pointer;
+    border: none;
+    z-index: 1000;
 }
 
-/* 드롭다운 화살표 아이콘 스타일 */
-.dropdown-arrow {
-    width: 30px;
-    height: 30px;
+/* 드롭다운 콘텐츠 */
+.dropdownContent {
+    display: block;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 5px;
 }
 
-/* 토글 버튼 그룹 스타일 */
-.toggle-button-group {
+/* 드롭다운 아이템 */
+.dropdownItem {
+    padding: 12px 16px;
+    cursor: pointer;
+}
+
+.dropdownItem:hover {
+    background-color: #ddd;
+}
+
+/* 스크롤바 스타일 */
+.dropdownContent::-webkit-scrollbar {
+    width: 12px; /* 스크롤바 너비 */
+}
+
+.dropdownContent::-webkit-scrollbar-track {
+    border-radius: 10px; /* 스크롤바 트랙 모서리 */
+}
+
+.dropdownContent::-webkit-scrollbar-thumb {
+    background-color: #555; /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 모서리 */
+    border: 2px solid #f1f1f1; /* 스크롤바 경계 */
+}
+
+
+/* 토글 버튼 그룹 */
+.toggleButtonGroup {
     position: absolute;
     top: 20px;
-    left: 710px;
+    left: 680px;
     height: 50px;
     z-index: 1000;
     display: flex;
@@ -163,8 +211,8 @@ body {
     overflow: hidden;
 }
 
-/* 개별 토글 버튼 스타일 */
-.toggle-button {
+/* 개별 토글 버튼 */
+.toggleButton {
     font-size: 16px;
     background-color: white;
     color: #1f3eff;
@@ -176,14 +224,14 @@ body {
     white-space: nowrap;
 }
 
-/* 활성화된 토글 버튼 스타일 */
-.toggle-button.active {
+/* 활성화된 토글 버튼 */
+.toggleButton.active {
     background-color: #1f3eff;
     color: white;
 }
 
-/* 찜 목록 버튼 스타일 */
-.bookmark-button {
+/* 찜 목록 버튼 */
+.bookmarkButton {
     font-size: 16px;
     position: absolute;
     top: 20px;
@@ -203,45 +251,49 @@ body {
     white-space: nowrap;
 }
 
-/* 찜 목록을 전체 화면에 표시할 때 스타일 */
-.wishlist-container-full {
+/* 찜 목록 컨테이너 */
+.wishlistContainerFull {
     position: absolute;
-    top: 0;
     right: 0;
+    top: 0;
     bottom: 0;
-    width: 400px; 
-    background-color: white; /* 닫기 버튼과 같은 배경색 */
-    border-left: none; /* 경계선 제거 */
+    width: 400px;
+    background-color: white;
+    border-left: none;
     z-index: 1000;
     padding: 20px;
-    overflow-y: auto;
-    box-shadow: none; /* 그림자 제거 */
+    overflow-y: scroll;
+    box-shadow: 0px 0 8px rgba(0, 0, 0, 0.15);
 }
-.wishlist-container-full h1 {
+
+/* 찜 목록 제목 */
+.wishlistContainerFull h1 {
     margin-top: 0;
     margin-bottom: 50px;
     font-family: 'PretendardMedium', sans-serif;
 }
 
-.wishlist-container-full ul {
+/* 찜 목록 리스트 */
+.wishlistContainerFull ul {
     list-style: none;
     padding: 0;
     margin: 0;
     flex-grow: 1;
 }
 
-/* 찜 목록 항목 스타일 */
-.wishlist-container-full li {
+/* 찜 목록 항목 */
+.wishlistContainerFull li {
+    font-size: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     list-style: none;
 }
 
-/* 찜 목록 제거 버튼 스타일 */
-.wishlist-remove-button {
+/* 찜 목록 제거 버튼 */
+.wishlistRemoveButton {
     background: url('public/images/removebutton-icon.png') no-repeat center center;
     background-size: contain;
     border: none;
@@ -252,37 +304,44 @@ body {
     padding: 0;
 }
 
-/* 찜 목록 아이콘 스타일 */
-.bookmark-icon {
+/* 찜 목록 아이콘 */
+.bookmarkIcon {
     width: 20px;
     height: 20px;
     margin-right: 8px;
 }
 
-/* 찜 목록 닫기 버튼 스타일 */
-.wishlist-close-button {
-    z-index: 2000;
+/* 찜 목록 닫기 버튼 */
+.wishlistCloseButton {
+    z-index: 1000;
     position: absolute;
     height: 100px;
-    top: 40%;
-    left: calc(100% - 470px);
-    background-color: white; /* 리스트와 같은 배경색으로 설정 */
-    border: none; /* 경계선 제거 */
+    top: 300px;
+    right: 450px;
+    background-color: white;
+    border: none;
     font-size: 20px;
     cursor: pointer;
     font-weight: bold;
     color: #333;
     padding: 10px;
-    box-shadow: none; /* 그림자 제거 */
-    border-radius: 30% 0 0 30%; 
+    box-shadow: none;
+    border-radius: 30% 0 0 30%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: -10px;
 }
 
-.wishlist-close-icon {
-    width: 20px; /* 아이콘의 너비 */
-    height: 20px; /* 아이콘의 높이 */
+/* 찜 목록 닫기 아이콘 */
+.wishlistCloseIcon {
+    width: 20px;
+    height: 20px;
 }
 
+/* 반응형 디자인 */
+@media (max-width: 1400px) {
+    .bookmarkButton {
+        right: -200px;
+    }
+}
