@@ -2,11 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import './map.css';
 
-// 시군구 데이터 및 좌표 설정 (데이터베이스 연결 필요)
 const CITIES = {
   '서울특별시': ['중구', '서대문구', '강남구'],
   '부산광역시': ['중구', '서대문구', '강남구'],
   '대구광역시': ['중구', '서대문구', '강남구'],
+  '서울특별시2': ['중구', '서대문구', '강남구'],
+  '부산광역시3': ['중구', '서대문구', '강남구'],
+  '대구광역시1': ['중구', '서대문구', '강남구'],
+  '서울특별시12': ['중구', '서대문구', '강남구'],
+  '부산광역시11': ['중구', '서대문구', '강남구'],
+  '대구광역시11': ['중구', '서대문구', '강남구'],
 };
 
 const CITY_COORDINATES = {
@@ -23,8 +28,10 @@ const Map: React.FC = () => {
   const [markers, setMarkers] = useState<any[]>([]);
   const mapRef = useRef<any>(null);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
-  const [isWishlistVisible, setIsWishlistVisible] = useState<boolean>(false); // 찜 목록 표시 여부 상태 추가
-  const [wishlistItems, setWishlistItems] = useState<string[]>(Array(10).fill('서울특별시 종로구 종로 56길 순위권 시티타워')); // 찜 목록 상태 추가
+  const [isWishlistVisible, setIsWishlistVisible] = useState<boolean>(false);
+  const [wishlistItems, setWishlistItems] = useState<string[]>(Array(10).fill('서울특별시 종로구 종로 56길 순위권 시티타워'));
+  const [isCityDropdownOpen, setIsCityDropdownOpen] = useState<boolean>(false);
+  const [isDistrictDropdownOpen, setIsDistrictDropdownOpen] = useState<boolean>(false);
 
   const handleToggleAllClick = () => {
     setIsAllSelected(true);
@@ -35,15 +42,15 @@ const Map: React.FC = () => {
   };
 
   const handleWishlistClick = () => {
-    setIsWishlistVisible(true); // 찜 목록 버튼 클릭 시 찜 목록 표시
+    setIsWishlistVisible(true);
   };
 
   const handleWishlistClose = () => {
-    setIsWishlistVisible(false); // 찜 목록 닫기
+    setIsWishlistVisible(false);
   };
 
   const handleRemoveWishlistItem = (index: number) => {
-    setWishlistItems(prevItems => prevItems.filter((_, i) => i !== index)); // 해당 인덱스의 항목 제거
+    setWishlistItems(prevItems => prevItems.filter((_, i) => i !== index));
   };
 
   useEffect(() => {
@@ -77,6 +84,24 @@ const Map: React.FC = () => {
       mapRef.current.setCenter(locPosition);
     }
   }, [selectedCity]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        !(event.target as HTMLElement).closest('.customDropdown.cityDropdown') &&
+        !(event.target as HTMLElement).closest('.customDropdown.districtDropdown')
+      ) {
+        setIsCityDropdownOpen(false);
+        setIsDistrictDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const clearMarkers = () => {
     markers.forEach(marker => marker.setMap(null));
@@ -116,95 +141,114 @@ const Map: React.FC = () => {
     }
   };
 
-  const handleCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = event.target.value;
-    setSelectedCity(selected);
-    setSelectedDistrict(CITIES[selected][0]);
+  const toggleCityDropdown = () => {
+    setIsCityDropdownOpen(!isCityDropdownOpen);
+    setIsDistrictDropdownOpen(false);
   };
 
-  const handleDistrictChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedDistrict(event.target.value);
+  const toggleDistrictDropdown = () => {
+    setIsDistrictDropdownOpen(!isDistrictDropdownOpen);
+    setIsCityDropdownOpen(false);
+  };
+
+  const selectCity = (city: string) => {
+    setSelectedCity(city);
+    setSelectedDistrict(CITIES[city][0]);
+    setIsCityDropdownOpen(false);
+  };
+
+  const selectDistrict = (district: string) => {
+    setSelectedDistrict(district);
+    setIsDistrictDropdownOpen(false);
   };
 
   return (
-    <div className="map-container">
-      {/* 검색 박스 */}
-      <div className="search-box">
-        <div className="search-left">
-          <img src="public/images/logo.png" alt="user icon" className="search-logoicon" />
-          <span className="search-text">청년여기</span>
+    <div className="mapContainer">
+      <div className="searchBox">
+        <div className="searchLeft">
+          <img src="public/images/logo.png" alt="user icon" className="searchLogoIcon" />
+          <span className="searchText">청년여기</span>
         </div>
-        <div className="search-right">
+        <div className="searchRight">
           <input
             type="text"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="주소를 입력해주세요"
           />
-          <button onClick={handleSearchClick} className="search-button">
-            <img src="public/images/magnifier.png" alt="search icon" className="search-button-icon" />
+          <button onClick={handleSearchClick} className="searchButton">
+            <img src="public/images/magnifier.png" alt="search icon" className="searchButtonIcon" />
           </button>
         </div>
       </div>
 
-      {/* 필터 컨테이너 */}
-      <div className="filter-container">
-        <div className="filter-item">
-          <select onChange={handleCityChange} value={selectedCity}>
-            {Object.keys(CITIES).map(city => (
-              <option key={city} value={city}>{city}</option>
-            ))}
-          </select>
+      <div className="filterContainer">
+        <div className="customDropdown cityDropdown">
+          <button className="dropdownButton" onClick={toggleCityDropdown}>
+            {selectedCity}
+          </button>
+          {isCityDropdownOpen && (
+            <div className="dropdownContent">
+              {Object.keys(CITIES).map(city => (
+                <div key={city} className="dropdownItem" onClick={() => selectCity(city)}>
+                  {city}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        <img src="public/images/arrow.png" alt="arrow" className="dropdown-arrow" />
+        <img src="public/images/arrow.png" alt="arrow" className="dropdownArrow" />
 
-        <div className="filter-item">
-          <select onChange={handleDistrictChange} value={selectedDistrict}>
-            {CITIES[selectedCity].map(district => (
-              <option key={district} value={district}>{district}</option>
-            ))}
-          </select>
+        <div className="customDropdown districtDropdown">
+          <button className="dropdownButton" onClick={toggleDistrictDropdown}>
+            {selectedDistrict}
+          </button>
+          {isDistrictDropdownOpen && (
+            <div className="dropdownContent">
+              {CITIES[selectedCity].map(district => (
+                <div key={district} className="dropdownItem" onClick={() => selectDistrict(district)}>
+                  {district}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* 전체/진행 중 토글 버튼 그룹 */}
-      <div className="toggle-button-group">
+      <div className="toggleButtonGroup">
         <button
-          className={`toggle-button ${isAllSelected ? 'active' : ''}`}
+          className={`toggleButton ${isAllSelected ? 'active' : ''}`}
           onClick={handleToggleAllClick}>
           전체
         </button>
         <button
-          className={`toggle-button ${!isAllSelected ? 'active' : ''}`}
+          className={`toggleButton ${!isAllSelected ? 'active' : ''}`}
           onClick={handleToggleProgressClick}>
           진행 중
         </button>
       </div>
 
-      {/* 찜 목록 버튼 - 찜 목록이 보일 때는 숨김 */}
       {!isWishlistVisible && (
-        <button className="bookmark-button" onClick={handleWishlistClick}>
-          <img src="public/images/bookmark-icon.png" alt="bookmark icon" className="bookmark-icon" />
+        <button className="bookmarkButton" onClick={handleWishlistClick}>
+          <img src="public/images/bookmark-icon.png" alt="bookmark icon" className="bookmarkIcon" />
           찜 목록
         </button>
       )}
 
-      {/* 찜 목록 표시 - 찜 목록 버튼이 클릭되면 화면을 꽉 채우게 */}
       {isWishlistVisible && (
         <>
-          {/* 찜 목록 닫기 버튼 */}
-          <button className="wishlist-close-button" onClick={handleWishlistClose} aria-label="Close wishlist">
-            <img src="public/images/close-icon.png" alt="Close" className="wishlist-close-icon" />
+          <button className="wishlistCloseButton" onClick={handleWishlistClose} aria-label="Close wishlist">
+            <img src="public/images/close-icon.png" alt="Close" className="wishlistCloseIcon" />
           </button>
 
-          <div className="wishlist-container-full">
+          <div className="wishlistContainerFull">
             <h1>찜 목록</h1>
             <ul>
               {wishlistItems.map((item, index) => (
                 <li key={index}>
                   {item}
-                  <button className="wishlist-remove-button" onClick={() => handleRemoveWishlistItem(index)} aria-label="Remove from wishlist"></button>
+                  <button className="wishlistRemoveButton" onClick={() => handleRemoveWishlistItem(index)} aria-label="Remove from wishlist"></button>
                 </li>
               ))}
             </ul>
@@ -212,7 +256,6 @@ const Map: React.FC = () => {
         </>
       )}
 
-      {/* 지도 영역 */}
       <div id="map"></div>
     </div>
   );
