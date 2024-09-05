@@ -3,7 +3,7 @@ import axios from 'axios';
 import './map.css';
 
 const CITIES = {
-  '서울특별시': ['중구', '서대문구', '강남구'],
+  '서울특별시': ['중구', '서대문구', '강남구', '중구', '서대문구', '강남구'],
   '부산광역시': ['중구', '서대문구', '강남구'],
   '대구광역시': ['중구', '서대문구', '강남구'],
   '서울특별시2': ['중구', '서대문구', '강남구'],
@@ -12,7 +12,7 @@ const CITIES = {
   '서울특별시12': ['중구', '서대문구', '강남구'],
   '부산광역시11': ['중구', '서대문구', '강남구'],
   '대구광역시11': ['중구', '서대문구', '강남구'],
-}; 
+};
 
 const CITY_COORDINATES = {
   '서울특별시': { lat: 37.5665, lng: 126.9780 },
@@ -32,6 +32,9 @@ const Map: React.FC = () => {
   const [wishlistItems, setWishlistItems] = useState<string[]>(Array(10).fill('서울특별시 종로구 종로 56길 순위권 시티타워'));
   const [isCityDropdownOpen, setIsCityDropdownOpen] = useState<boolean>(false);
   const [isDistrictDropdownOpen, setIsDistrictDropdownOpen] = useState<boolean>(false);
+  const handleRefreshPage = () => {
+    window.location.reload(); // 페이지 새로고침
+  };
 
   const handleToggleAllClick = () => {
     setIsAllSelected(true);
@@ -165,7 +168,8 @@ const Map: React.FC = () => {
   return (
     <div className="mapContainer">
       <div className="searchBox">
-        <div className="searchLeft">
+        {/* searchLeft 클릭 시 페이지 새로고침 */}
+        <div className="searchLeft" onClick={handleRefreshPage}>
           <img src="public/images/logo.png" alt="user icon" className="searchLogoIcon" />
           <span className="searchText">청년여기</span>
         </div>
