@@ -274,12 +274,15 @@ const Map: React.FC = () => {
     if(!isKakaoLoaded) return;
     kakao.maps.event.removeListener(mapRef.current, 'click', function(){});
     if(!mapClicked) return;
-console.log('mapclicked');
+    console.log('mapclicked');
     places.forEach((place)=>{
       place.infoWindow.setVisible(false);
     });
     setMapClicked(false);
   }, [mapClicked]);
+
+
+
 
   const handleSearchClick = async () => {
     if (!isKakaoLoaded) {
@@ -361,7 +364,11 @@ console.log('mapclicked');
       // const response = await axios.get('/map/search', { params: { searchword: searchInput } });
       // const data = response.data;
 
+
+
+
       const csvToJson = (csv: string): object[] => {
+        console.log(csv);
         const result = Papa.parse(csv, {
           header: true,  // This ensures that the first row is treated as keys for JSON objects
           skipEmptyLines: true,  // Skips empty lines if any
@@ -371,107 +378,101 @@ console.log('mapclicked');
       };
       
       // Example CSV input
-      const csvData = `"complex_name","province","city","address","household_number","heating_system","house_type","elevator","rental_business_operator","parkinglot_number","building_shape","building_completion_date"
-부천영상 행복주택(지역전략산업),경기도,부천시 원미구,경기도 부천시 원미구 길주로 17,"850","",아파트,"",LH인천,"0","","2023-05-01"
-녹번역이편한세상캐슬(응암2)_서울리츠2호,서울특별시,은평구,서울특별시 은평구 은평로 220,"163",개별난방,아파트,전체동 설치,SH공사,"2974",혼합식,"2020-05-19"
-신반포자이,서울특별시,서초구,서울특별시 서초구 잠원로 60,"71",지역난방,아파트,전체동 설치,SH공사,"981",계단식,"2018-07-27"
-청주산단2(행복),충청북도,청주시 흥덕구,충청북도 청주시 흥덕구 공단로 58,"30",개별가스난방,아파트,전체동 설치,LH충북,"25","","2022-11-28"
-문경흥덕 행복주택,경상북도,문경시,경상북도 문경시 호서로 175,"200","",아파트,"",LH대구경북,"0","","2021-12-01"`;
       
-      const jsonData = csvToJson(csvData);
-      // console.log(jsonData);
-      const data = jsonData;
+//       const csvData = `"complex_name","province","city","address","household_number","heating_system","house_type","elevator","rental_business_operator","parkinglot_number","building_shape","building_completion_date"
+// 부천영상 행복주택(지역전략산업),경기도,부천시 원미구,경기도 부천시 원미구 길주로 17,"850","",아파트,"",LH인천,"0","","2023-05-01"
+// 녹번역이편한세상캐슬(응암2)_서울리츠2호,서울특별시,은평구,서울특별시 은평구 은평로 220,"163",개별난방,아파트,전체동 설치,SH공사,"2974",혼합식,"2020-05-19"
+// 신반포자이,서울특별시,서초구,서울특별시 서초구 잠원로 60,"71",지역난방,아파트,전체동 설치,SH공사,"981",계단식,"2018-07-27"
+// 청주산단2(행복),충청북도,청주시 흥덕구,충청북도 청주시 흥덕구 공단로 58,"30",개별가스난방,아파트,전체동 설치,LH충북,"25","","2022-11-28"
+// 문경흥덕 행복주택,경상북도,문경시,경상북도 문경시 호서로 175,"200","",아파트,"",LH대구경북,"0","","2021-12-01"`;
+      
+      let text;
+      const fetchData = async () => {
+        const response = await fetch('../src/_ComplexInformation.csv');
+        text = await response.text();
+        // return text;
 
+        const data = csvToJson(text);
 
+        clearMarkers();
+        clearPlaces();
+        data.forEach(elem => {
+          var geocoder = new kakao.maps.services.Geocoder();
 
-      // data: 5 objects
-      // column name
-      //   complex_name, address, province, city
-      //   building_completion_dat, building_shape, elevator, heating_system, house_type, household_number, parkinglot_number, rental_business_operator
+          var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              elem.x = result[0].x;
+              elem.y = result[0].y;
+              
+              const { kakao } = window as any;
+              const locPosition = new kakao.maps.LatLng(elem.y, elem.x);
 
-      // todos
-      //   address -> (lng, lat)
+              // mapRef.current.setCenter(locPosition);
+              mapRef.current.setCenter(new kakao.maps.LatLng(COUNTY_COORDINATES[district].lat, COUNTY_COORDINATES[district].lng));
+              mapRef.current.setLevel(5);
 
-      function openDetail(){
-        console.log('openDetail function occured')
-      }
-
-
-      clearMarkers();
-      clearPlaces();
-      data.forEach(elem => {
-        var geocoder = new kakao.maps.services.Geocoder();
-
-        var callback = function(result, status) {
-          if (status === kakao.maps.services.Status.OK) {
-            elem.x = result[0].x;
-            elem.y = result[0].y;
-            
-            const { kakao } = window as any;
-            const locPosition = new kakao.maps.LatLng(elem.y, elem.x);
-
-            // mapRef.current.setCenter(locPosition);
-            mapRef.current.setCenter(new kakao.maps.LatLng(COUNTY_COORDINATES[district].lat, COUNTY_COORDINATES[district].lng));
-
-            const imageSize = new kakao.maps.Size(36, 43);
-            const imageSource = markerPng;
-            const imageOption = { offset: new kakao.maps.Point(18, 43) };
-            const markerImage = new kakao.maps.MarkerImage(imageSource, imageSize, imageOption);
-            const marker = new kakao.maps.Marker({
-              map: mapRef.current,
-              position: locPosition,
-              image: markerImage,
-            });
-            // infoWindow 생성
-            const infoWindow = new kakao.maps.CustomOverlay({
-              content:
-              `<div class='infoWindow'>
-                <div class='shortInfo'>
-                  <div class='shortInfoTitle'>
-                    <p class='complex_name'>${elem.complex_name}</p>
-                    <p class='recruitment_status'></p>
-                    <button class='openDetail'>상세정보</button>
+              const imageSize = new kakao.maps.Size(36, 43);
+              const imageSource = markerPng;
+              const imageOption = { offset: new kakao.maps.Point(18, 43) };
+              const markerImage = new kakao.maps.MarkerImage(imageSource, imageSize, imageOption);
+              const marker = new kakao.maps.Marker({
+                map: mapRef.current,
+                position: locPosition,
+                image: markerImage,
+              });
+              // infoWindow 생성
+              const infoWindow = new kakao.maps.CustomOverlay({
+                content:
+                `<div class='infoWindow'>
+                  <div class='shortInfo'>
+                    <div class='shortInfoTitle'>
+                      <p class='complex_name'>${elem.complex_name}</p>
+                      <p class='recruitment_status'></p>
+                      <button class='openDetail'>상세정보</button>
+                    </div>
+                    <div class='address'>${elem.address || '-'}</div>
+                    <div class='shortInfoData'>
+                      <div class='name'>세대 수</div>
+                      <div class='data'>${elem.household_number || '-'}</div>
+                      <div class='name'>난방시설</div>
+                      <div class='data'>${elem.heating_system || '-'}</div>
+                      <div class='name'>건물 유형</div>
+                      <div class='data'>${elem.house_type || '-'}</div>
+                      <div class='name'>승강기 설치</div>
+                      <div class='data'>${elem.elevator || '-'}</div>
+                      <div class='name'>주차장</div>
+                      <div class='data'>${elem.parkinglot_number || '-'}</div>
+                      <div class='name'>건물 형태</div>
+                      <div class='data'>${elem.building_shape || '-'}</div>
+                      <div class='name'>준공일자</div>
+                      <div class='data'>${elem.building_completion_date || '-'}</div>
+                    </div>
                   </div>
-                  <div class='address'>${elem.address || '-'}</div>
-                  <div class='shortInfoData'>
-                    <div class='name'>세대 수</div>
-                    <div class='data'>${elem.household_number || '-'}</div>
-                    <div class='name'>난방시설</div>
-                    <div class='data'>${elem.heating_system || '-'}</div>
-                    <div class='name'>건물 유형</div>
-                    <div class='data'>${elem.house_type || '-'}</div>
-                    <div class='name'>승강기 설치</div>
-                    <div class='data'>${elem.elevator || '-'}</div>
-                    <div class='name'>주차장</div>
-                    <div class='data'>${elem.parkinglot_number || '-'}</div>
-                    <div class='name'>건물 형태</div>
-                    <div class='data'>${elem.building_shape || '-'}</div>
-                    <div class='name'>준공일자</div>
-                    <div class='data'>${elem.building_completion_date || '-'}</div>
-                  </div>
-                </div>
-              </div>`,
-              clickable: true
-            });
-            
-            setMarkers(prevMarkers => [...prevMarkers, marker]);
-            
-            kakao.maps.event.addListener(marker, 'click', function(){
-              markerRef.current = marker;
-              setMarkerClicked(true);
-            });
-            kakao.maps.event.addListener(mapRef.current, 'click', function(){
-              setMapClicked(true);
-            });
-            
-            setMarkers(prevMarkers => [...prevMarkers, marker]);
-            setPlaces(prevPlaces => [...prevPlaces, new SearchedPlace(elem, marker, infoWindow)]);
-          }
-        };
+                </div>`,
+                clickable: true
+              });
+              
+              setMarkers(prevMarkers => [...prevMarkers, marker]);
+              
+              kakao.maps.event.addListener(marker, 'click', function(){
+                markerRef.current = marker;
+                setMarkerClicked(true);
+              });
+              kakao.maps.event.addListener(mapRef.current, 'click', function(){
+                setMapClicked(true);
+              });
+              
+              setMarkers(prevMarkers => [...prevMarkers, marker]);
+              setPlaces(prevPlaces => [...prevPlaces, new SearchedPlace(elem, marker, infoWindow)]);
+            }
+          };
 
-        geocoder.addressSearch(elem.address, callback);
-      });
-      // console.log(markers);
+          geocoder.addressSearch(elem.address, callback);
+        });
+        // console.log(markers);
+
+      };
+      fetchData();
 
 
 
@@ -630,11 +631,51 @@ function SectionComponent({place}: DetailPageProps) {
 }
 
 function TypeComponent({place}: DetailPageProps) {
-  return <div>This is the Shape Component</div>;
+  const location = place.location;
+  return (
+    <div className='detailedInfo'>
+      <div className='sizeShape'>
+        <div>-</div>
+        <div>-</div>
+        <div>-</div>
+        <div>-</div>
+        <div>-</div>
+      </div>
+      <div className='sizeShapeOthers'>
+        <div>전용면적</div><div>{location.exclusive_area || '-'}</div>
+        <div>공용면적</div><div>{location.common_area || '-'}</div>
+        <div>공급면적</div><div>{location.supply_area || '-'}</div>
+        <div>보증금</div><div>{location.deposit || '-'}</div>
+        <div>임대료</div><div>{location.rent || '-'}</div>
+        <div>전환보증금</div><div>{location.conversion_deposit || '-'}</div>
+      </div>
+    </div>
+  );
 }
 
 function RecruitComponent({place}: DetailPageProps) {
-  return <div>This is the Recruit Component</div>;
+  const location = place.location;
+  return (
+    <div className='detailedInfo'>
+      <div className='recruitName'>
+        <div>공고명</div><div>{location.subscription_name || '-'}</div>
+      </div>
+      <div className='recruitInfo'>
+        <div>금회공급세대수</div><div>{location.household_number_now || '-'}</div>
+        <div>공고게시일</div><div>{location.start_date || '-'}</div>
+        <div>입주예정월</div><div>{location.estimated_month || '-'}</div>
+        <div>공고마감일</div><div>{location.end_date || '-'}</div>
+        <div>모집상태</div><div>{location.recruitment_status || '-'}</div>
+      </div>
+      <div className='recruitBrief'>
+        <div>안내사항</div><div>{location.notification || '-'}</div>
+      </div>
+      {/* 새 창으로 열기 */}
+      <div className='noticeDiv'>
+        <button className='noticeURL' onClick={()=>{ 'subscription_URL' }}>공고 바로가기</button>
+      </div>
+    </div>
+  );
 }
 
 function DetailPage({place}: DetailPageProps) {
