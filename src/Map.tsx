@@ -4,7 +4,7 @@ import './map.css';
 import { CITIES, CITY_COORDINATES, COUNTY_COORDINATES } from './map/cities';
 
 import Papa from 'papaparse';
-import markerPng from './marker.png';
+import markerPng from '/public/images/marker.png';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 class SearchedPlace {
@@ -253,9 +253,10 @@ const Map: React.FC = () => {
           // console.log('before placeref.current2')
           // console.log(placeRef.current);
           const button = document.querySelector('.openDetail');
+          
           if(button !== null){
-            console.log('opendetail');
             button.addEventListener('click', (event) => {
+            console.log('opendetail');
               // window.location.href="./detail";
 
               navigate('/detail');
@@ -300,7 +301,7 @@ const Map: React.FC = () => {
       const locPosition = new kakao.maps.LatLng(data.y, data.x);
       mapRef.current.setCenter(locPosition);
 
-      const imageSize = new kakao.maps.Size(36, 43);
+      const imageSize = new kakao.maps.Size(43, 43);
       const imageOption = { offset: new kakao.maps.Point(18, 43) };
       const markerImage = new kakao.maps.MarkerImage('marker.png', imageSize, imageOption);
 
@@ -427,25 +428,18 @@ const Map: React.FC = () => {
                   <div class='shortInfo'>
                     <div class='shortInfoTitle'>
                       <p class='complex_name'>${elem.complex_name}</p>
-                      <p class='recruitment_status'></p>
-                      <button class='openDetail'>상세정보</button>
+                      <p class='recruitment_status no_recruitment'>공고 없음</p>
                     </div>
                     <div class='address'>${elem.address || '-'}</div>
                     <div class='shortInfoData'>
+                      <div class='name'>주택유형</div>
+                      <div class='data'>${elem.house_type || '-'}</div>
                       <div class='name'>세대 수</div>
                       <div class='data'>${elem.household_number || '-'}</div>
-                      <div class='name'>난방시설</div>
-                      <div class='data'>${elem.heating_system || '-'}</div>
-                      <div class='name'>건물 유형</div>
-                      <div class='data'>${elem.house_type || '-'}</div>
-                      <div class='name'>승강기 설치</div>
-                      <div class='data'>${elem.elevator || '-'}</div>
-                      <div class='name'>주차장</div>
-                      <div class='data'>${elem.parkinglot_number || '-'}</div>
-                      <div class='name'>건물 형태</div>
-                      <div class='data'>${elem.building_shape || '-'}</div>
-                      <div class='name'>준공일자</div>
-                      <div class='data'>${elem.building_completion_date || '-'}</div>
+                    </div>
+                    <div class='shortInfoButtons'>
+                      <button class='pick'><img src="/public/images/check-mark1.png">찜</button>
+                      <button class='openDetail'>상세정보</button>
                     </div>
                   </div>
                 </div>`,
@@ -614,17 +608,17 @@ function SectionComponent({place}: DetailPageProps) {
   return (
     <div className='detailedInfo'>
       <div className='infoAddress'>
-        <div>주소</div><div>{location.address || '-'}</div>
+        <div className='infoHead'>주소</div><div>{location.address || '-'}</div>
       </div>
       <div className='infoOthers'>
-        <div>세대수</div><div>{location.household_number || '-'}</div>
-        <div>난방방식</div><div>{location.heating_system || '-'}</div>
-        <div>주택유형</div><div>{location.house_type || '-'}</div>
-        <div>승강기</div><div>{location.elevator || '-'}</div>
-        <div>임대사업자</div><div>{location.rental_business_operator || '-'}</div>
-        <div>주차수</div><div>{location.parkinglot_number || '-'}</div>
-        <div>건물형태</div><div>{location.building_shape || '-'}</div>
-        <div>준공일자</div><div>{location.building_completion_date || '-'}</div>
+        <div className='infoHead'>세대수</div><div>{location.household_number || '-'}</div>
+        <div className='infoHead'>난방방식</div><div>{location.heating_system || '-'}</div>
+        <div className='infoHead'>주택유형</div><div>{location.house_type || '-'}</div>
+        <div className='infoHead'>승강기</div><div>{location.elevator || '-'}</div>
+        <div className='infoHead'>임대사업자</div><div>{location.rental_business_operator || '-'}</div>
+        <div className='infoHead'>주차수</div><div>{location.parkinglot_number || '-'}</div>
+        <div className='infoHead'>건물형태</div><div>{location.building_shape || '-'}</div>
+        <div className='infoHead'>준공일자</div><div>{location.building_completion_date || '-'}</div>
       </div>
     </div>
   );
@@ -642,12 +636,12 @@ function TypeComponent({place}: DetailPageProps) {
         <div>-</div>
       </div>
       <div className='sizeShapeOthers'>
-        <div>전용면적</div><div>{location.exclusive_area || '-'}</div>
-        <div>공용면적</div><div>{location.common_area || '-'}</div>
-        <div>공급면적</div><div>{location.supply_area || '-'}</div>
-        <div>보증금</div><div>{location.deposit || '-'}</div>
-        <div>임대료</div><div>{location.rent || '-'}</div>
-        <div>전환보증금</div><div>{location.conversion_deposit || '-'}</div>
+        <div className='infoHead'>전용면적</div><div>{location.exclusive_area || '-'}</div>
+        <div className='infoHead'>공용면적</div><div>{location.common_area || '-'}</div>
+        <div className='infoHead'>공급면적</div><div>{location.supply_area || '-'}</div>
+        <div className='infoHead'>보증금</div><div>{location.deposit || '-'}</div>
+        <div className='infoHead'>임대료</div><div>{location.rent || '-'}</div>
+        <div className='infoHead'>전환보증금</div><div>{location.conversion_deposit || '-'}</div>
       </div>
     </div>
   );
@@ -658,21 +652,21 @@ function RecruitComponent({place}: DetailPageProps) {
   return (
     <div className='detailedInfo'>
       <div className='recruitName'>
-        <div>공고명</div><div>{location.subscription_name || '-'}</div>
+        <div className='infoHead'>공고명</div><div>{location.subscription_name || '-'}</div>
       </div>
       <div className='recruitInfo'>
-        <div>금회공급세대수</div><div>{location.household_number_now || '-'}</div>
-        <div>공고게시일</div><div>{location.start_date || '-'}</div>
-        <div>입주예정월</div><div>{location.estimated_month || '-'}</div>
-        <div>공고마감일</div><div>{location.end_date || '-'}</div>
-        <div>모집상태</div><div>{location.recruitment_status || '-'}</div>
+        <div className='infoHead'>금회공급세대수</div><div>{location.household_number_now || '-'}</div>
+        <div className='infoHead'>공고게시일</div><div>{location.start_date || '-'}</div>
+        <div className='infoHead'>입주예정월</div><div>{location.estimated_month || '-'}</div>
+        <div className='infoHead'>공고마감일</div><div>{location.end_date || '-'}</div>
+        <div className='infoHead'>모집상태</div><div>{location.recruitment_status || '-'}</div>
       </div>
       <div className='recruitBrief'>
-        <div>안내사항</div><div>{location.notification || '-'}</div>
+        <div className='infoHead'>안내사항</div><div>{location.notification || '-'}</div>
       </div>
       {/* 새 창으로 열기 */}
       <div className='noticeDiv'>
-        <button className='noticeURL' onClick={()=>{ 'subscription_URL' }}>공고 바로가기</button>
+        <button className='noticeURL' onClick={()=>{ 'subscription_URL' }}>상세공고 바로가기</button>
       </div>
     </div>
   );
@@ -701,18 +695,19 @@ function DetailPage({place}: DetailPageProps) {
 
   return (
     <div className='detailWrap'>
-      <button className='back' onClick={handleDetailBack}>{'<'} 돌아가기</button>
+      <button className='back' onClick={handleDetailBack}>{'< '} 돌아가기</button>
       <div className='title'>
         <h1>{place.location.complex_name}</h1>
+        <button className='pick'><img src="/public/images/check-mark1.png"/>찜</button>
       </div>
 
       {/* Button to toggle components */}
       <div className='buttonList'>
-        <button onClick={() => setActiveComponent('sectionInfo')}>Section</button>
+        <button className={(activeComponent == 'sectionInfo')?'activeComponent':'sectionInfo'} onClick={() => setActiveComponent('sectionInfo')}>단지 정보</button>
         |
-        <button onClick={() => setActiveComponent('typeInfo')}>Type</button>
+        <button className={(activeComponent == 'typeInfo')?'activeComponent':'sectionInfo'} onClick={() => setActiveComponent('typeInfo')}>주택형별 정보</button>
         |
-        <button onClick={() => setActiveComponent('recruitInfo')}>Recruit</button>
+        <button className={(activeComponent == 'recruitInfo')?'activeComponent':'sectionInfo'} onClick={() => setActiveComponent('recruitInfo')}>공고 정보</button>
       </div>
 
       {/* Render the selected component */}

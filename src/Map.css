@@ -363,7 +363,6 @@ body {
   border-radius: 10px;
   overflow: hidden;
   min-width: 300px;
-  min-height: 150px;
   border: 2px solid #1f3eff;
   background: white;
   padding: 10px;
@@ -392,19 +391,24 @@ body {
 .shortInfo{
   display:flex;
   flex-direction: column;
+  padding: 8px;
 }
 
 .shortInfoTitle{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 .shortInfoTitle>p{
   font-size: 20px;
-  margin: 5px;
+  margin-top: 0;
+  margin-bottom: 2px;
+  margin-right: 8px;
 }
 .openDetail{
-  padding: 10px;
+  padding: 10px 25px;
+  color:#1f3eff;
+  font-weight: bold;
   font-size: 15px;
   background-color: white;
   border: 2px solid #1f3eff;
@@ -412,16 +416,44 @@ body {
   z-index: 3000;
   pointer-events: auto;
 }
+.pick{
+  height: 40px;
+  padding: 8px 15px;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: #1f3eff;
+  border: 2px solid #1f3eff;
+  border-radius: 10px;
+  z-index: 3000;
+  pointer-events: auto;
+}
+.pick>img{
+  width: 17px;
+  height: 17px;
+  transform:translateY(3px);
+  margin-right: 4px;
+}
 
 .address{
-  margin: 5px 0px 8px 0px;
+  margin: 0px 0px 8px 0px;
+}
+p.recruitment_status{
+  font-size: 16px;
+  align-self: center;
+  padding: 2px;
+}
+.no_recruitment{
+  background-color: lightgray;
 }
 .shortInfoData{
   /* background-color: lightgray; */
   display: grid;
-  grid-template-rows: repeat(7, 1fr);
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: repeat(2, auto);
   gap: 1px;
+  margin-top: 6px;
+  margin-bottom: 20px;
   /* border: 1px solid lightgray; */
 }
 .shortInfoData>div{
@@ -429,6 +461,12 @@ body {
 }
 .shortInfoData>.name{
   font-weight: bold;
+}
+
+.shortInfoButtons{
+  display: flex;
+
+  justify-content: space-between;
 }
 
 
@@ -440,12 +478,20 @@ body {
   margin: 20px 5vw 20px 5vw;
   overflow: hidden;
 }
+.detailWrap>div.title{
+  display: flex;
+}
+.detailWrap>div.title>.pick{
+  transform: translateY(18px);
+  margin-left: 30px;
+}
 
 .back{
   border: none;
   background-color: white;
   font-weight: bold;
   top: 10px;
+  color: #1f3eff;
 }
 
 .buttonList{
@@ -456,15 +502,21 @@ body {
   background-color: inherit;
   border-style: none;
   cursor: pointer;
+  font-weight: bold;
 }
 
-.detailedInfo div{
-  border: 1px solid black;
+.detailedInfo>div>div{
+  background-color: white;
+  font-size: 15px;
+  padding-left: 12px;
 }
 .infoAddress{
   display: grid;
   grid-template-columns: 1fr 5fr;
   margin: 10px 0;
+  gap: 1px;
+  background-color: lightgray;
+  border: 1px solid lightgray;
 }
 .infoAddress>div{
   padding: 5px;
@@ -473,9 +525,17 @@ body {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 2fr;
   grid-template-rows: repeat(4, auto);
+  gap: 1px;
+  background-color: lightgray;
+  border: 1px solid lightgray;
 }
 .infoOthers>div{
   padding: 5px;
+}
+.infoOthers>div.infoHead, .infoAddress>div.infoHead,
+.sizeShapeOthers>div.infoHead,.recruitName>div.infoHead,
+.recruitInfo>div.infoHead, .recruitBrief>div.infoHead{
+  background-color: rgb(232, 232, 232);
 }
 div.sizeShape{
   display: flex;
@@ -486,12 +546,15 @@ div.sizeShape{
 .sizeShape>div{
   min-width: 35px;
   height: 25px;
-  border: 1px solid black;
+  border-bottom: 1px solid lightgray;
 }
 .sizeShapeOthers{
   display: grid;
   grid-template-columns: 1fr 5fr;
   grid-template-rows: repeat(2, auto);
+  gap: 1px;
+  background-color: lightgray;
+  border: 1px solid lightgray;
 }
 .sizeShapeOthers>div{
   padding: 5px;
@@ -500,6 +563,9 @@ div.sizeShape{
   display: grid;
   grid-template-columns: 1fr 5fr;
   margin: 10px 0;
+  gap: 1px;
+  background-color: lightgray;
+  border: 1px solid lightgray;
 }
 .recruitName>div, .recruitBrief>div{
   padding: 5px;
@@ -508,6 +574,9 @@ div.sizeShape{
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 2fr;
   grid-template-rows: repeat(4, auto);
+  gap: 1px;
+  background-color: lightgray;
+  border: 1px solid lightgray;
 }
 .recruitInfo>div{
   padding: 5px;
@@ -532,5 +601,9 @@ div.noticeDiv{
   z-index: 3000;
   pointer-events: auto;
   font-weight: bold;
+  color: #1f3eff;
+}
+
+button.activeComponent{
   color: #1f3eff;
 }
