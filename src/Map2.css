@@ -1,0 +1,615 @@
+/* Pretendard Medium 폰트 설정 */
+@font-face {
+    font-family: 'PretendardMedium';
+    src: url('/fonts/Pretendard-Medium.woff2') format('woff2'),
+        url('/fonts/Pretendard-Medium.woff') format('woff'),
+        url('/fonts/Pretendard-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 기본 스타일 */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'PretendardMedium', sans-serif;
+    overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+#root>div{
+  width: 100%;
+  height: 100%;
+}
+
+/* 지도 영역 */
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* 지도 컨테이너 */
+.mapContainer {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 검색 박스 */
+.searchBox {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 400px;
+    height: 50px;
+    border: 2px solid #1f3eff;
+}
+
+/* 검색 박스 왼쪽 영역 */
+.searchLeft {
+    display: flex;
+    align-items: center;
+    background: #1f3eff;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* 검색 박스 로고 아이콘 */
+.searchLogoIcon {
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+
+/* 검색 박스 텍스트 */
+.searchText {
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* 검색 박스 오른쪽 영역 */
+.searchRight {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 10px;
+    flex-grow: 1;
+}
+
+/* 검색 입력 필드 */
+.searchBox input {
+    font-size: 16px;
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    margin-right: 5px;
+    outline: none;
+    width: 100%;
+    font-family: 'PretendardMedium', sans-serif;
+    text-align: left;
+}
+
+/* 검색 입력 필드 placeholder */
+.searchBox input::placeholder {
+    font-size: 16px;
+    color: #999;
+    text-align: left;
+}
+
+/* 검색 버튼 */
+.searchButton {
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 검색 버튼 아이콘 */
+.searchButtonIcon {
+    width: 35px;
+    height: 35px;
+}
+
+/* 필터 컨테이너 */
+.filterContainer {
+    position: absolute;
+    font-size: 16px;
+    top: 20px;
+    left: 440px;
+    width: 250px;
+    z-index: 1000;
+    background-color: white;
+    padding: 4px 10px;
+    border-radius: 10px;
+    border: 2px solid #1f3eff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'PretendardMedium', sans-serif;
+    white-space: nowrap;
+}
+
+/* 커스텀 드롭다운 */
+.customDropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* 드롭다운 버튼 */
+.dropdownButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80px;
+    padding: 5px;
+    font-size: 16px;
+    font-family: 'PretendardMedium', sans-serif;
+    background-color: white;
+    cursor: pointer;
+    border: none;
+    z-index: 1000;
+}
+
+/* 드롭다운 콘텐츠 */
+.dropdownContent {
+    display: block;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 5px;
+}
+
+/* 드롭다운 아이템 */
+.dropdownItem {
+    padding: 12px 16px;
+    cursor: pointer;
+}
+
+.dropdownItem:hover {
+    background-color: #ddd;
+}
+
+/* 스크롤바 스타일 */
+.dropdownContent::-webkit-scrollbar {
+    width: 12px; /* 스크롤바 너비 */
+}
+
+.dropdownContent::-webkit-scrollbar-track {
+    border-radius: 10px; /* 스크롤바 트랙 모서리 */
+}
+
+.dropdownContent::-webkit-scrollbar-thumb {
+    background-color: #555; /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 모서리 */
+    border: 2px solid #f1f1f1; /* 스크롤바 경계 */
+}
+
+.dropdownArrow {
+    margin-left: 15px; /* 원하는 만큼의 값을 설정하여 오른쪽으로 이동 */
+}
+
+
+/* 토글 버튼 그룹 */
+.toggleButtonGroup {
+    position: absolute;
+    top: 20px;
+    left: 730px;
+    height: 50px;
+    z-index: 1000;
+    display: flex;
+    border: 2px solid #1f3eff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* 개별 토글 버튼 */
+.toggleButton {
+    font-size: 16px;
+    background-color: white;
+    color: #1f3eff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-family: 'PretendardMedium', sans-serif;
+    flex: 1;
+    white-space: nowrap;
+}
+
+/* 활성화된 토글 버튼 */
+.toggleButton.active {
+    background-color: #1f3eff;
+    color: white;
+}
+
+/* 찜 목록 버튼 */
+.bookmarkButton {
+    font-size: 16px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    height: 54px;
+    background-color: #1f3eff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'PretendardMedium', sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+/* 찜 목록 컨테이너 */
+.wishlistContainerFull {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 400px;
+    background-color: white;
+    border-left: none;
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: scroll;
+    box-shadow: 0px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 찜 목록 제목 */
+.wishlistContainerFull h1 {
+    margin-top: 0;
+    margin-bottom: 50px;
+    font-family: 'PretendardMedium', sans-serif;
+}
+
+/* 찜 목록 리스트 */
+.wishlistContainerFull ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+/* 찜 목록 항목 */
+.wishlistContainerFull li {
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 30px;
+    list-style: none;
+}
+
+/* 찜 목록 제거 버튼 */
+.wishlistRemoveButton {
+    background: url('public/images/removebutton-icon.png') no-repeat center center;
+    background-size: contain;
+    border: none;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0;
+}
+
+/* 찜 목록 아이콘 */
+.bookmarkIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+/* 찜 목록 닫기 버튼 */
+.wishlistCloseButton {
+    z-index: 1000;
+    position: absolute;
+    height: 100px;
+    top: 300px;
+    right: 450px;
+    background-color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    padding: 10px;
+    box-shadow: none;
+    border-radius: 30% 0 0 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: -10px;
+}
+
+/* 찜 목록 닫기 아이콘 */
+.wishlistCloseIcon {
+    width: 20px;
+    height: 20px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1400px) {
+  .bookmarkButton {
+      right: -200px;
+  }
+}
+
+.infoWindow {
+  position: absolute;
+  top: 10px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  z-index: 2000;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 300px;
+  border: 2px solid #1f3eff;
+  background: white;
+  padding: 10px;
+  pointer-events: auto;
+}
+
+.shortInfo{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.shortInfoTitle{
+  display: inline;
+}
+
+.complex_name{
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.recruit_status{
+  background-color: yellow;
+}
+
+.shortInfo{
+  display:flex;
+  flex-direction: column;
+  padding: 8px;
+}
+
+.shortInfoTitle{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.shortInfoTitle>p{
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 2px;
+  margin-right: 8px;
+}
+.openDetail{
+  padding: 10px 25px;
+  color:#1f3eff;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: white;
+  border: 2px solid #1f3eff;
+  border-radius: 10px;
+  z-index: 3000;
+  pointer-events: auto;
+}
+.pick{
+  height: 40px;
+  padding: 8px 15px;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: #1f3eff;
+  border: 2px solid #1f3eff;
+  border-radius: 10px;
+  z-index: 3000;
+  pointer-events: auto;
+}
+.pick>img{
+  width: 17px;
+  height: 17px;
+  transform:translateY(3px);
+  margin-right: 4px;
+}
+
+.address{
+  margin: 0px 0px 8px 0px;
+}
+p.recruitment_status{
+  font-size: 16px;
+  align-self: center;
+  padding: 2px;
+}
+.no_recruitment{
+  background-color: lightgray;
+}
+.shortInfoData{
+  /* background-color: lightgray; */
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: repeat(2, auto);
+  gap: 1px;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  /* border: 1px solid lightgray; */
+}
+.shortInfoData>.name{
+  font-weight: bold;
+}
+
+.shortInfoButtons{
+  display: flex;
+
+  justify-content: space-between;
+}
+
+
+.detailWrap{
+  width: 90vw;
+  height: 100vh;
+  background-color: white;
+  padding: 0;
+  margin: 20px 5vw 20px 5vw;
+  overflow: hidden;
+}
+.detailWrap>div.title{
+  display: flex;
+}
+.detailWrap>div.title>.pick{
+  transform: translateY(18px);
+  margin-left: 30px;
+}
+
+.back{
+  border: none;
+  background-color: white;
+  font-weight: bold;
+  top: 10px;
+  color: #1f3eff;
+}
+
+.buttonList{
+  background-color: rgb(215, 214, 255);
+}
+.buttonList>button{
+  margin: 8px;
+  background-color: inherit;
+  border-style: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.detailedInfo>div>div{
+  background-color: white;
+  font-size: 15px;
+  padding-left: 12px;
+}
+.infoAddress{
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  margin: 10px 0;
+  gap: 1px;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+}
+.infoAddress>div{
+  padding: 5px;
+}
+.infoOthers{
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 2fr;
+  grid-template-rows: repeat(4, auto);
+  gap: 1px;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+}
+.infoOthers>div{
+  padding: 5px;
+}
+.infoOthers>div.infoHead, .infoAddress>div.infoHead,
+.sizeShapeOthers>div.infoHead,.recruitName>div.infoHead,
+.recruitInfo>div.infoHead, .recruitBrief>div.infoHead{
+  background-color: rgb(232, 232, 232);
+}
+div.sizeShape{
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0;
+  border: none;
+}
+.sizeShape>div{
+  min-width: 35px;
+  height: 25px;
+  border-bottom: 1px solid lightgray;
+}
+.sizeShapeOthers{
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: repeat(2, auto);
+  gap: 1px;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+}
+.sizeShapeOthers>div{
+  padding: 5px;
+}
+.recruitName, .recruitBrief{
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  margin: 10px 0;
+  gap: 1px;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+}
+.recruitName>div, .recruitBrief>div{
+  padding: 5px;
+}
+.recruitInfo{
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 2fr;
+  grid-template-rows: repeat(4, auto);
+  gap: 1px;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+}
+.recruitInfo>div{
+  padding: 5px;
+}
+.recruitInfo>div:nth-child(2){
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 5;
+}
+div.noticeDiv{
+  display: flex;
+  justify-content: flex-end;
+  border: none;
+}
+.noticeURL{
+  padding: 10px 20px;
+  font-size: 15px;
+  background-color: white;
+  border: 2px solid #1f3eff;
+  border-radius: 10px;
+  z-index: 3000;
+  pointer-events: auto;
+  font-weight: bold;
+  color: #1f3eff;
+}
+
+button.activeComponent{
+  color: #1f3eff;
+}

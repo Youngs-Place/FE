@@ -4,7 +4,7 @@ import './map.css';
 import { CITIES, CITY_COORDINATES, COUNTY_COORDINATES } from './map/cities';
 
 import Papa from 'papaparse';
-import markerPng from '/public/images/marker.png';
+import markerPng from '/src/images/marker.png';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 class SearchedPlace {
@@ -438,7 +438,7 @@ const Map: React.FC = () => {
                       <div class='data'>${elem.household_number || '-'}</div>
                     </div>
                     <div class='shortInfoButtons'>
-                      <button class='pick'><img src="/public/images/check-mark1.png">찜</button>
+                      <button class='pick'><img src="/src/images/check-mark1.png">찜</button>
                       <button class='openDetail'>상세정보</button>
                     </div>
                   </div>
@@ -489,7 +489,7 @@ const Map: React.FC = () => {
                 {/* 검색 박스 */}
                 <div className="searchBox">
                   <div className="searchLeft" onClick={handleRefreshPage}>
-                    <img src="public/images/logo.png" alt="user icon" className="searchLogoIcon" />
+                    <img src="src/images/logo.png" alt="user icon" className="searchLogoIcon" />
                     <span className="searchText">청년여기</span>
                   </div>
                   <div className="searchRight">
@@ -500,7 +500,7 @@ const Map: React.FC = () => {
                       placeholder="주소를 입력해주세요"
                     />
                     <button onClick={handleSearchClick} className="searchButton">
-                      <img src="public/images/magnifier.png" alt="search icon" className="searchButtonIcon" />
+                      <img src="src/images/magnifier.png" alt="search icon" className="searchButtonIcon" />
                     </button>
                   </div>
                 </div>
@@ -522,7 +522,7 @@ const Map: React.FC = () => {
                     )}
                   </div>
 
-                  <img src="public/images/arrow.png" alt="arrow" className="dropdownArrow" />
+                  <img src="src/images/arrow.png" alt="arrow" className="dropdownArrow" />
 
                   <div className="customDropdown districtDropdown">
                     <button className="dropdownButton" onClick={toggleDistrictDropdown}>
@@ -557,7 +557,7 @@ const Map: React.FC = () => {
                 {/* 찜 목록 버튼 - 찜 목록이 보일 때는 숨김 */}
                 {!isWishlistVisible && (
                   <button className="bookmarkButton" onClick={handleWishlistClick}>
-                    <img src="public/images/bookmark-icon.png" alt="bookmark icon" className="bookmarkIcon" />
+                    <img src="src/images/bookmark-icon.png" alt="bookmark icon" className="bookmarkIcon" />
                     찜 목록
                 </button>
                 )}
@@ -567,7 +567,7 @@ const Map: React.FC = () => {
                   <>
                     {/* 찜 목록 닫기 버튼 */}
                     <button className="wishlistCloseButton" onClick={handleWishlistClose} aria-label="Close wishlist">
-                      <img src="public/images/close-icon.png" alt="Close" className="wishlistCloseIcon" />
+                      <img src="src/images/close-icon.png" alt="Close" className="wishlistCloseIcon" />
                     </button>
 
                     <div className="wishlistContainerFull">
@@ -698,7 +698,7 @@ function DetailPage({place}: DetailPageProps) {
       <button className='back' onClick={handleDetailBack}>{'< '} 돌아가기</button>
       <div className='title'>
         <h1>{place.location.complex_name}</h1>
-        <button className='pick'><img src="/public/images/check-mark1.png"/>찜</button>
+        <button className='pick'><img src="/src/images/check-mark1.png"/>찜</button>
       </div>
 
       {/* Button to toggle components */}
