@@ -17,7 +17,7 @@ const Map2 = () => {
       {/* 선택창 */}
       <Select />
 
-      {/* 공고 모아보기 */}
+      {/* 공고 모아보기 토글 */}
       <ToggleAnnouncement />
 
       {/* 북마크 */}

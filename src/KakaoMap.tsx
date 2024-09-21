@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import './Map2.css';
 import { useRecoilState } from 'recoil';
-import { currentPlace } from './atom/states';
+import { currentPlaceOption } from './atom/states';
 
 const KakaoMap = () => {
   // @ts-ignore
-  const [currentPlaceOptions, setCurrentPlaceOptions] = useRecoilState(currentPlace);
+  const [currentPlaceOptions, setCurrentPlaceOptions] = useRecoilState(currentPlaceOption);
 
   useEffect(() => {
     const throwError = () => {
