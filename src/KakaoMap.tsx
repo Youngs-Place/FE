@@ -2,6 +2,11 @@ import { useEffect } from 'react'
 import './Map2.css';
 import { useRecoilState } from 'recoil';
 import { currentPlaceOption } from './atom/states';
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 const KakaoMap = () => {
   // @ts-ignore
@@ -22,9 +27,10 @@ const KakaoMap = () => {
       console.log('script#callAPI created');
     }
     const script: HTMLScriptElement | null = document.querySelector('script#callAPI');
+    // console.log('1', script);
     script !== null && (script.onload = () => {
-      
-      const { kakao } = window as any;
+      // console.log('2', script);
+      // const { kakao } = window as any;
       kakao.maps.load(() => {
         const container = document.getElementById("map");
         

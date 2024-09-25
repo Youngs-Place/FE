@@ -1,24 +1,42 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 const Search = () => { // @ts-ignore
   const [searchInput, setSearchInput] = useState(''); // @ts-ignore
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
 
   useEffect(()=>{
+    // kakao.maps not defined
     const scriptOnload = async () => {
       const script = await document.querySelector('script#callAPI') as HTMLScriptElement | null;
+
+      const kk = await window.kakao;
+      const kk2 = await window.kakao.maps;
+      console.log(kk);
+      console.log(kk2);
+
+
       script && (script.onload = () => {
+      // (script.onload = () => {
         console.log('a');
-        const { kakao } = window as any;
+        // const { kakao } = window as any;
         const container = document.querySelector('div#map');
         const options = { // @ts-ignore
-          center: new kakao.maps.LatLng(placeRef.current.marker.getPosition().getLat(), placeRef.current.marker.getPosition().getLng()),
+          // center: new kakao.maps.LatLng(placeRef.current.marker.getPosition().getLat(), placeRef.current.marker.getPosition().getLng()),
+          center: new kakao.maps.LatLng(33.450701, 126.570667),
           level: 4,
         }; // @ts-ignore
         const kakaoMap = new kakao.maps.Map(container, options);
         setMap(kakaoMap);
-      });
+      })();
     };
     scriptOnload();
   }, []);
@@ -35,7 +53,7 @@ const Search = () => { // @ts-ignore
 
       // clearMarkers()
 
-      const { kakao } = window as any
+      const { kakao } = window;
       const locPosition = new kakao.maps.LatLng(data.y, data.x)
       map !== null && map.setCenter(locPosition);
 
