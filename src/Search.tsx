@@ -3,11 +3,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
 
 const Search = () => { // @ts-ignore
   const [searchInput, setSearchInput] = useState(''); // @ts-ignore
@@ -49,7 +44,7 @@ const Search = () => { // @ts-ignore
       const response = await axios.get('/map/search', {
         params: { searchword: searchInput },
       })
-      const data = response.data.documents[0]
+      const data = response.data.documents[0];
 
       // clearMarkers()
 
@@ -65,12 +60,14 @@ const Search = () => { // @ts-ignore
         imageOption
       )
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const marker = new kakao.maps.Marker({
         map: map,
         position: locPosition,
         image: markerImage,
       })
       // infoWindow 생성
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const infoWindow = new kakao.maps.CustomOverlay({
         content: 'infoWindow content',
         clickable: true,
