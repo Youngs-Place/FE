@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 // kakao가 동적으로 로드할 js 라이브러리에 있어서 인식이 안 된다.
 // .d.ts에 형식을 정의해서 ts에 인식시킬 수 있다고 한다.
 // 임시로 @ts-ignore를 붙였으나 추후 타입 정의할 것

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { CITIES } from "./map/cities";
 
+import Papa from 'papaparse';
+
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 const Select = () => {
   const [isCityDropdownOpen, setIsCityDropdownOpen] = useState<boolean>(false);
@@ -30,7 +32,33 @@ const Select = () => {
   // @ts-ignore
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const selectDistrict = (district: string) => {
+    setSelectedDistrict(district);
+    setIsDistrictDropdownOpen(false);
+    try{
+      const csvToJson = (csv: string): object[] => {
+        console.log(csv);
+        const result = Papa.parse(csv, {
+          header: true,  // This ensures that the first row is treated as keys for JSON objects
+          skipEmptyLines: true,  // Skips empty lines if any
+        });
+        
+        return result.data as object[];
+      };
 
+      // fetch search api
+      // fetch 결과는 장소 데이터 n개
+      // 각 결과마다 SearchedPlace 생성
+      //    location
+      //    marker
+      //    infowindow
+      // infowindow는 customoverlay 사용해야 함
+      // -> 별도 컨테이너로 만들 것
+      // 
+      
+    }catch(error){
+      console.error('Error fetching data:', error);
+      alert('필터 결과가 없습니다.');
+    }
   }
 
   return (
