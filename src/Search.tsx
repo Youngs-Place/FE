@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-
+import { SimpleHouseData } from './types/data';
 
 const Search = () => { // @ts-ignore
   const [searchInput, setSearchInput] = useState(''); // @ts-ignore
@@ -44,7 +45,24 @@ const Search = () => { // @ts-ignore
       const response = await axios.get('/map/search', {
         params: { searchword: searchInput },
       })
-      const data = response.data.documents[0];
+      const data: SimpleHouseData = response.data.documents[0];
+
+
+
+/////////////////////////////////////////////
+// 맵 내 마커 초기화
+// 반환된 장소 1개소 마커, 정보창 생성
+/////////////////////////////////////////////
+// SearchedPlace 생성으로 바꾸어야 함
+
+      const lat: number = data.lat;
+      const lng: number = data.lng;
+      const name: string = data.name;
+      const recruitState: boolean = data.recruitState;
+      const address: string = data.address;
+      const houseType: string = data.houseType;
+      const householdNumber: number = data.householdNumber;
+
 
       // clearMarkers()
 
