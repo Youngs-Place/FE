@@ -2,14 +2,10 @@ import { useEffect } from 'react'
 import './Map2.css';
 import { useRecoilState } from 'recoil';
 import { currentPlaceOption } from './atom/states';
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
+import { SearchedPlace } from './atom/class';
+import { SimpleHouseData } from './types/data';
 
 const KakaoMap = () => {
-  // @ts-ignore
   const [currentPlaceOptions, setCurrentPlaceOptions] = useRecoilState(currentPlaceOption);
 
   useEffect(() => {
@@ -30,17 +26,25 @@ const KakaoMap = () => {
     // console.log('1', script);
     script !== null && (script.onload = () => {
       // console.log('2', script);
-      // const { kakao } = window as any;
-      kakao.maps.load(() => {
-        const container = document.getElementById("map");
+      window.kakao.maps.load(() => {
+        const container = document.getElementById("map") as HTMLElement;
         
         const options = {
-          center: new kakao.maps.LatLng(33.450701, 126.570667),
+          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
           level: 4,
         };
-        // @ts-ignore
-        const map = new kakao.maps.Map(container, options);
-        setCurrentPlaceOptions(options);
+        const map = new window.kakao.maps.Map(container, options);
+        // setCurrentPlaceOptions(options);
+        const placeData: SimpleHouseData = {
+          lat: 33.450701,
+          lng: 126.570667,
+          name: "",
+          recruitState: true,
+          address: "",
+          houseType: "",
+          householdNumber: 0,
+        };
+        setCurrentPlaceOptions(new SearchedPlace(placeData));
       });
 
     })

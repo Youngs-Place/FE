@@ -11,6 +11,7 @@ interface KakaoMaps {
     Point: new (x: number, y: number) => any;
     MarkerImage: new (src: string, size: KakaoMaps['maps']['Size'], options?: object) => any;
     // Add more Kakao Maps types as needed
+    load: any;
   };
 }
 
